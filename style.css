@@ -1,0 +1,449 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background: #101216;
+  color: #ffffff;
+}
+
+button {
+  font-family: inherit;
+}
+
+
+/* =========================
+   APP
+========================= */
+
+#app {
+  width: 100%;
+  height: 100svh;
+}
+
+.screen {
+  display: none;
+
+  width: 100%;
+  height: 100%;
+
+  padding:
+    max(20px, env(safe-area-inset-top))
+    20px
+    max(20px, env(safe-area-inset-bottom));
+
+  align-items: center;
+  justify-content: center;
+}
+
+.screen.active {
+  display: flex;
+}
+
+
+/* =========================
+   TOP
+========================= */
+
+.top-content {
+  width: 100%;
+  max-width: 430px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-area {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.sub-title {
+  margin: 0 0 8px;
+
+  font-size: 13px;
+  letter-spacing: 2px;
+
+  color: #8f96a3;
+}
+
+h1 {
+  margin: 0;
+
+  font-size: clamp(32px, 9vw, 44px);
+  letter-spacing: 2px;
+}
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+.setting-block {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.setting-title {
+  margin: 0 0 12px;
+
+  text-align: center;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+
+  color: #8f96a3;
+}
+
+.choice-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+}
+
+.choice-button {
+  min-height: 58px;
+
+  border: 1px solid #333944;
+  border-radius: 14px;
+
+  background: #1b1f26;
+  color: #9ca3af;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s,
+    transform 0.1s;
+}
+
+.choice-button:active {
+  transform: scale(0.97);
+}
+
+.choice-button.active {
+  background: #ffffff;
+  color: #101216;
+  border-color: #ffffff;
+}
+
+#draw-button {
+  width: 100%;
+  min-height: 68px;
+
+  margin-top: 20px;
+
+  border: none;
+  border-radius: 18px;
+
+  background: #ffffff;
+  color: #101216;
+
+  font-size: 21px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition: transform 0.1s;
+}
+
+#draw-button:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================
+   DRAWING SCREEN
+========================= */
+
+/* =========================
+   DRAWING SCREEN
+========================= */
+
+.drawing-content {
+  width: 100%;
+  text-align: center;
+}
+
+.drawing-label {
+  margin: 0 0 24px;
+
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 4px;
+
+  color: #8f96a3;
+}
+
+#drawing-text {
+  font-size: clamp(34px, 10vw, 48px);
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+
+/* =========================
+   RESULT SCREEN
+========================= */
+
+.result-content {
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.result-header {
+  text-align: center;
+
+  padding-top: 10px;
+  margin-bottom: 28px;
+}
+
+.result-header h2 {
+  margin: 0;
+
+  font-size: 34px;
+  letter-spacing: 3px;
+}
+
+
+/* 結果一覧 */
+
+#result-list {
+  width: 100%;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 14px;
+}
+
+.result-row {
+  width: 100%;
+
+  padding: 16px 10px;
+
+  border: 1px solid #2f3540;
+  border-radius: 14px;
+
+  background: #191d23;
+
+  display: flex;
+  align-items: center;
+}
+
+.result-label {
+  width: 64px;
+  flex-shrink: 0;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #8f96a3;
+}
+
+.result-numbers {
+  flex: 1;
+
+  display: flex;
+  justify-content: space-between;
+
+  gap: 4px;
+
+  font-size: clamp(17px, 4.6vw, 22px);
+  font-weight: 800;
+
+  font-variant-numeric: tabular-nums;
+}
+
+.result-number {
+  min-width: 26px;
+  text-align: center;
+}
+
+
+/* =========================
+   RESULT BUTTONS
+========================= */
+
+.result-buttons {
+  width: 100%;
+
+  padding-top: 20px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+}
+
+.result-buttons button {
+  min-height: 58px;
+
+  border-radius: 14px;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+#again-button {
+  border: none;
+
+  background: #ffffff;
+  color: #101216;
+}
+
+#top-button {
+  border: 1px solid #3b414d;
+
+  background: #1b1f26;
+  color: #ffffff;
+}
+
+
+/* =========================
+   SMALL HEIGHT
+========================= */
+
+@media (max-height: 700px) {
+
+  .title-area {
+    margin-bottom: 30px;
+  }
+
+  .setting-block {
+    margin-bottom: 20px;
+  }
+
+  #draw-button {
+    margin-top: 10px;
+  }
+
+  .result-header {
+    margin-bottom: 16px;
+  }
+
+  #result-list {
+    gap: 8px;
+  }
+
+  .result-row {
+    padding: 11px 8px;
+  }
+
+  .result-buttons {
+    padding-top: 12px;
+  }
+
+}
+/* =========================
+   MOBILE FINAL TUNING
+========================= */
+
+/* タップ時の青いハイライトを消す */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* iPhoneで文字サイズが勝手に変わるのを防ぐ */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* 小さいスマホ向け */
+@media (max-width: 390px) {
+
+  .result-row {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .result-label {
+    width: 56px;
+    font-size: 12px;
+  }
+
+  .result-numbers {
+    font-size: 16px;
+    gap: 2px;
+  }
+
+  .result-number {
+    min-width: 23px;
+  }
+
+}
+
+/* 高さがかなり低い端末向け */
+@media (max-height: 620px) {
+
+  .result-header {
+    padding-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .result-header h2 {
+    font-size: 28px;
+  }
+
+  #result-list {
+    gap: 6px;
+  }
+
+  .result-row {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .result-buttons {
+    padding-top: 8px;
+  }
+
+  .result-buttons button {
+    min-height: 50px;
+  }
+
+}
+
+#result-mode-label {
+  margin: 14px 0 0;
+
+  text-align: center;
+
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 2px;
+
+  color: #8f96a3;
+}

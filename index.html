@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101216">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <title>NUMBER DRAW</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <main id="app">
+
+    <!-- =========================
+         TOP SCREEN
+    ========================== -->
+
+    <section id="top-screen" class="screen active">
+
+      <div class="top-content">
+
+        <div class="title-area">
+          <p class="sub-title">Random Number Generator</p>
+          <h1>NUMBER DRAW</h1>
+        </div>
+
+        <div class="setting-block">
+          <p class="setting-title">NUMBERS</p>
+
+          <div class="choice-row">
+
+            <button
+              class="choice-button mode-button active"
+              data-mode="6"
+            >
+              6 NUMBERS
+            </button>
+
+            <button
+              class="choice-button mode-button"
+              data-mode="7"
+            >
+              7 NUMBERS
+            </button>
+
+          </div>
+        </div>
+
+        <div class="setting-block">
+          <p class="setting-title">DRAW COUNT</p>
+
+          <div class="choice-row">
+
+            <button
+              class="choice-button count-button active"
+              data-count="1"
+            >
+              1回
+            </button>
+
+            <button
+              class="choice-button count-button"
+              data-count="5"
+            >
+              5回
+            </button>
+
+          </div>
+        </div>
+
+        <button id="draw-button">
+          抽選する
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         DRAWING SCREEN
+    ========================== -->
+
+    <section id="drawing-screen" class="screen">
+
+      <div class="drawing-content">
+
+        <p class="drawing-label">
+          DRAWING
+        </p>
+
+        <div id="drawing-text">
+          抽選中...
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         RESULT SCREEN
+    ========================== -->
+
+    <section id="result-screen" class="screen">
+
+      <div class="result-content">
+
+        <div class="result-header">
+
+          <p class="sub-title">
+            Random Number Generator
+          </p>
+
+          <h2>RESULT</h2>
+          <p id="result-mode-label">
+            NUMBER 6
+          </p>
+
+        </div>
+
+        <div id="result-list"></div>
+
+        <div class="result-buttons">
+
+          <button id="again-button">
+            もう一度抽選
+          </button>
+
+          <button id="top-button">
+            トップへ
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
