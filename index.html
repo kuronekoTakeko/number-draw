@@ -10,6 +10,36 @@
 
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
+  <!-- 追加した特殊7のスタイル。既存 style.css は変更しません -->
+  <style>
+    #top-screen { overflow-y: auto; }
+    #top-screen .top-content { margin: auto 0; }
+    .special-mode-button {
+      grid-column: 1 / -1;
+      min-height: 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 9px 12px;
+    }
+    .special-mode-button .mode-subtitle {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .025em;
+      opacity: .8;
+    }
+    .special-result-note {
+      font-size: 12px;
+      color: #aeb7c6;
+      margin: 7px 0 0;
+    }
+    .result-number.special-top-number { color: #83d4bc; }
+    @media (max-height: 700px) {
+      .special-mode-button { min-height: 62px; }
+    }
+  </style>
 </head>
 
 <body>
@@ -46,6 +76,16 @@
               data-mode="7"
             >
               7 NUMBERS
+            </button>
+
+            <button
+              class="choice-button mode-button special-mode-button"
+              type="button"
+              data-mode="special7"
+              aria-label="特殊7抽選。上位15から4個、残り22から3個"
+            >
+              <span>特殊7抽選</span>
+              <span class="mode-subtitle">上位15個から4個 ＋ それ以外から3個</span>
             </button>
 
           </div>
@@ -125,6 +165,9 @@
           <h2>RESULT</h2>
           <p id="result-mode-label">
             NUMBER 6
+          </p>
+          <p id="special-result-note" class="special-result-note" hidden>
+            緑色の4個が、上位15個から抽出した数字です
           </p>
 
         </div>
