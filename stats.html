@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101216">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<title>過去100回の統計 | NUMBER DRAW</title>
+<style>
+*{box-sizing:border-box}html{color-scheme:dark}body{margin:0;background:#101216;color:#f5f7fb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.65}
+main{max-width:900px;margin:auto;padding:26px 20px 50px}.back{color:#d2d9e4;display:inline-block;margin-bottom:25px;text-underline-offset:4px}.eyebrow{color:#aeb7c6;letter-spacing:.13em;font-size:12px;font-weight:800}h1{font-size:clamp(24px,5.4vw,36px);margin:5px 0 6px;line-height:1.25}h2{font-size:20px;margin:0 0 12px}.muted{color:#aeb7c6}.intro{max-width:710px}.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:25px 0}.tile,.panel{border:1px solid #323b47;background:#1a1f27;border-radius:16px;padding:17px}.tile span{font-size:13px;color:#acb6c5;display:block}.tile strong{font-size:28px;display:block;line-height:1.3;font-variant-numeric:tabular-nums}.panel{margin:15px 0 20px}.balls{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.ball{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:#303947;border:1px solid #596475;font-weight:800;font-variant-numeric:tabular-nums}.small{font-size:13px}.filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0 20px}.filters button{border:1px solid #445064;background:#262e3b;color:#e6edfc;border-radius:10px;padding:10px 13px;font-size:14px;cursor:pointer}.filters button[aria-pressed="true"]{background:#f5f7fb;color:#101216;border-color:#fff;font-weight:800}.bar-grid{display:grid;grid-template-columns:38px 1fr 58px;gap:8px 12px;align-items:center}.bar-track{height:17px;background:#292f39;border-radius:9px;overflow:hidden}.bar-fill{height:100%;background:#bbc9de;border-radius:9px}.bar-fill.highlight{background:#74b9b0}.bar-label,.bar-count{font-variant-numeric:tabular-nums;font-weight:700}.bar-count{text-align:right}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}th,td{padding:10px 12px;border-bottom:1px solid #343d49;text-align:left}th{color:#aeb7c6;font-size:12px;font-weight:700}td.nums{font-weight:800;white-space:nowrap;letter-spacing:.035em}tr.highlight{background:#263533}.hint{border-left:3px solid #8faabd;padding:8px 12px;color:#ced6e2;font-size:13px;background:#242d37;border-radius:0 8px 8px 0;margin-top:20px}.foot{font-size:12px;color:#aeb7c6;overflow-wrap:anywhere}a{color:#d2e1ff}select{background:#272e39;color:#fff;border:1px solid #5b6572;padding:10px;border-radius:10px;font-size:15px}
+@media(max-width:600px){main{padding:22px 14px 40px}.tile{padding:12px}.tiles{gap:7px}.tile strong{font-size:23px}.tile span{font-size:11px}.panel{padding:14px}th,td{padding:9px 8px;font-size:13px}.ball{width:38px;height:38px}}
+</style>
+</head>
+<body>
+<main>
+ <a class="back" href="index.html">← NUMBER DRAW に戻る</a>
+ <p class="eyebrow">DATA REVIEW · LOTO 7</p>
+ <h1>過去100回の抽せんデータ</h1>
+ <p class="intro muted">第600〜699回の本数字を集計。上位15数字に含まれる数と、それ以外の22数字に含まれる数の分布を確認する学習用分析画面です。</p>
+ <div class="tiles">
+   <div class="tile"><span>対象</span><strong>100回</strong></div>
+   <div class="tile"><span>上位15から4個</span><strong id="match-count">—</strong></div>
+   <div class="tile"><span>4＋3の割合</span><strong id="match-percent">—</strong></div>
+ </div>
+ <section class="panel">
+   <h2>出現ランキング上位15数字</h2>
+   <div id="top-balls" class="balls" aria-label="上位15数字"></div>
+   <p class="muted small">対象期間：2024年11月8日〜2026年10月16日。本数字のみ、ボーナス数字は含みません。</p>
+ </section>
+ <section class="panel">
+   <h2>7個のうち上位15数字が何個含まれたか</h2>
+   <p class="muted small">棒の長さは過去100回の観測回数です。4個の行は「上位15から4個＋その他22から3個」を意味します。</p>
+   <div id="histogram" class="bar-grid" role="img" aria-label="上位15数字の含有個数別、抽せん100回の分布"></div>
+   <p id="expected" class="muted small"></p>
+ </section>
+ <section class="panel">
+   <h2>各抽せん回の照合結果</h2>
+   <div class="filters" role="group" aria-label="抽せん結果の絞り込み">
+     <button type="button" data-filter="all" aria-pressed="true">すべて（100回）</button>
+     <button type="button" data-filter="four" aria-pressed="false">4＋3の回だけ</button>
+     <button type="button" data-filter="other" aria-pressed="false">それ以外</button>
+   </div>
+   <div class="table-wrap"><table><thead><tr><th>抽せん回</th><th>抽せん日</th><th>本数字7個</th><th>上位15</th><th>その他</th></tr></thead><tbody id="history"></tbody></table></div>
+ </section>
+ <div class="hint">この上位15数字は、分析対象である同じ100回の出現回数から選ばれています。したがって、100回内の出現割合は将来の予測精度を示すものではありません。公平な抽せんでは、過去の頻度によって次回の個別数字の当たりやすさは変わりません。</div>
+ <p class="foot">データ出典：<a href="https://kujishirube.info/loto7/history/" target="_blank" rel="noopener noreferrer">ロト7抽せん履歴</a>。固定版（2026年10月19日集計）。更新は自動ではありません。</p>
+</main>
+<script src="stats.js"></script>
+<script>if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(()=>{}));</script>
+</body>
+</html>

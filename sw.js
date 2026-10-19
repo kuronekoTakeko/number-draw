@@ -1,132 +1,56 @@
-const CACHE_NAME = "number-draw-v2";
-
+// NUMBER DRAW PWA: static cache for the history analysis screen.
+const CACHE_NAME = "number-draw-v3-stats";
 const APP_ASSETS = [
   "./index.html",
   "./style.css",
   "./app.js",
   "./manifest.json",
+  "./stats.html",
+  "./stats.js",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
 ];
 
-
-/* =========================
-   INSTALL
-========================= */
-
-self.addEventListener("install", (event) => {
-
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(APP_ASSETS);
-    })
-  );
-
+self.addEventListener("install", event => {
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_ASSETS)));
   self.skipWaiting();
-
 });
 
-
-/* =========================
-   ACTIVATE
-========================= */
-
-self.addEventListener("activate", (event) => {
-
+self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-
-      return Promise.all(
-
-        cacheNames
-          .filter((name) => {
-            return (
-              name.startsWith("number-draw-") &&
-              name !== CACHE_NAME
-            );
-          })
-
-          .map((name) => {
-            return caches.delete(name);
-          })
-
-      );
-
-    })
+    caches.keys().then(names => Promise.all(
+      names.filter(name => name.startsWith("number-draw-") && name !== CACHE_NAME)
+        .map(name => caches.delete(name))
+    ))
   );
-
   self.clients.claim();
-
 });
 
-
-/* =========================
-   FETCH
-========================= */
-
-self.addEventListener("fetch", (event) => {
-
+self.addEventListener("fetch", event => {
   const request = event.request;
+  if (request.method !== "GET") return;
+  if (new URL(request.url).origin !== self.location.origin) return;
 
-  if (request.method !== "GET") {
-    return;
-  }
-
-
-  /* ページ本体 */
   if (request.mode === "navigate") {
-
     event.respondWith(
-
-      fetch(request)
-
-        .then((response) => {
-
+      fetch(request).then(response => {
+        if (response.ok) {
           const copy = response.clone();
-
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put("./index.html", copy);
-          });
-
-          return response;
-
-        })
-
-        .catch(() => {
-
-          return caches.match("./index.html");
-
-        })
-
+          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+        }
+        return response;
+      }).catch(() => caches.match(request).then(cached => cached || caches.match("./index.html")))
     );
-
     return;
   }
 
-
-  /* CSS・JS・画像など */
   event.respondWith(
-
-    fetch(request)
-
-      .then((response) => {
-
+    fetch(request).then(response => {
+      if (response.ok) {
         const copy = response.clone();
-
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(request, copy);
-        });
-
-        return response;
-
-      })
-
-      .catch(() => {
-
-        return caches.match(request);
-
-      })
-
+        caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+      }
+      return response;
+    }).catch(() => caches.match(request))
   );
-
 });
