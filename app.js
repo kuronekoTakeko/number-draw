@@ -1,6 +1,6 @@
 /* =========================
    NUMBER DRAW / LOTTERY SIMULATOR
-   通常6・通常7 ＋ 特殊7（上位15から4、残り22から3）
+   通常6・通常7 ＋ 特殊7（全699回の上位20から4、残り17から3）
 ========================= */
 
 let selectedMode = 6;
@@ -8,13 +8,14 @@ let selectedCount = 1;
 
 const MAX_NUMBERS = { 6: 43, 7: 37 };
 
-// 第600〜699回（2024/11/08〜2026/10/16）の本数字出現ランキング上位15。
-// 同順位を含む固定データ。抽せん結果に応じた自動更新は行いません。
-const TOP15_SPECIAL7 = Object.freeze([1, 6, 7, 9, 10, 12, 18, 20, 22, 23, 24, 29, 34, 35, 36]);
-const TOP15_SPECIAL7_SET = new Set(TOP15_SPECIAL7);
-const OTHER22_SPECIAL7 = Object.freeze(
+// 第1〜699回（2013/04/05〜2026/10/16）の本数字出現ランキング上位20。
+// 同数の場合は数字の小さい順で順位を確定（20位: 14、21位: 21 はいずれも133回）。
+// この固定データは抽せん結果に応じて自動更新されません。
+const TOP20_SPECIAL7 = Object.freeze([4, 7, 8, 9, 10, 11, 13, 14, 15, 17, 18, 22, 26, 29, 30, 31, 32, 34, 35, 36]);
+const TOP20_SPECIAL7_SET = new Set(TOP20_SPECIAL7);
+const OTHER17_SPECIAL7 = Object.freeze(
   Array.from({length: 37}, (_, i) => i + 1)
-    .filter(number => !TOP15_SPECIAL7_SET.has(number))
+    .filter(number => !TOP20_SPECIAL7_SET.has(number))
 );
 
 /* =========================
@@ -86,11 +87,11 @@ function chooseWithoutReplacement(pool, count) {
   return shuffled.slice(0, count);
 }
 
-// 特殊7：上位15個から4個、上位15個には含まれない22個から3個。
+// 特殊7：全699回の上位20個から4個、上位20個には含まれない17個から3個。
 function createSpecialSevenDraw() {
-  const fromTop15 = chooseWithoutReplacement(TOP15_SPECIAL7, 4);
-  const fromOther22 = chooseWithoutReplacement(OTHER22_SPECIAL7, 3);
-  return [...fromTop15, ...fromOther22].sort((a, b) => a - b);
+  const fromTop20 = chooseWithoutReplacement(TOP20_SPECIAL7, 4);
+  const fromOther17 = chooseWithoutReplacement(OTHER17_SPECIAL7, 3);
+  return [...fromTop20, ...fromOther17].sort((a, b) => a - b);
 }
 
 function createResults() {
@@ -148,7 +149,7 @@ function showResults(results) {
     result.forEach(number => {
       const numberElement = document.createElement("span");
       numberElement.className = "result-number";
-      if (isSpecial && TOP15_SPECIAL7_SET.has(number)) {
+      if (isSpecial && TOP20_SPECIAL7_SET.has(number)) {
         numberElement.classList.add("special-top-number");
       }
       numberElement.textContent = formatNumber(number);
