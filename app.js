@@ -1,6 +1,6 @@
 /* =========================
    NUMBER DRAW / LOTTERY SIMULATOR
-   通常6・通常7 ＋ 特殊7（全699回の上位21から4、残り16から3）
+   通常6・通常7 ＋ 特殊7（全700回の上位21から4、残り16から3）
 ========================= */
 
 let selectedMode = 6;
@@ -8,8 +8,8 @@ let selectedCount = 1;
 
 const MAX_NUMBERS = { 6: 43, 7: 37 };
 
-// 第1〜699回（2013/04/05〜2026/10/16）の本数字出現ランキング上位21（133回以上）。
-// 18〜21位の07・11・14・21は同率133回のため、4数字とも採用。
+// 第1〜700回（2013/04/05〜2026/10/23）の本数字出現ランキング上位21（133回以上）。
+// 第700回終了時点では、19〜21位の07・11・14が同率133回。21は134回で18位。
 // この固定データは抽せん結果に応じて自動更新されません。
 const TOP21_SPECIAL7 = Object.freeze([4, 7, 8, 9, 10, 11, 13, 14, 15, 17, 18, 21, 22, 26, 29, 30, 31, 32, 34, 35, 36]);
 const TOP21_SPECIAL7_SET = new Set(TOP21_SPECIAL7);
@@ -87,7 +87,7 @@ function chooseWithoutReplacement(pool, count) {
   return shuffled.slice(0, count);
 }
 
-// 特殊7：全699回の上位21個から4個、上位21個には含まれない16個から3個。
+// 特殊7：全700回の上位21個から4個、上位21個には含まれない16個から3個。
 function createSpecialSevenDraw() {
   const fromTop21 = chooseWithoutReplacement(TOP21_SPECIAL7, 4);
   const fromOther16 = chooseWithoutReplacement(OTHER16_SPECIAL7, 3);
