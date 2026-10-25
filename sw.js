@@ -1,5 +1,5 @@
 // NUMBER DRAW PWA: static cache for the history analysis screen.
-const CACHE_NAME = "number-draw-v6-special7-all699-top21";
+const CACHE_NAME = "number-draw-v7-stats700";
 const APP_ASSETS = [
   "./index.html",
   "./style.css",
@@ -7,6 +7,7 @@ const APP_ASSETS = [
   "./manifest.json",
   "./stats.html",
   "./stats.js",
+  "./stats700.html",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
 ];
